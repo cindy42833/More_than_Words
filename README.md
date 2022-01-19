@@ -22,4 +22,4 @@ https://github.com/cindy42833/More_than_Words.git
 
 ## Reference
 - This project is base on https://github.com/rmtheis/android-ocr
-- Upgrade teestwo by https://github.com/alexcohn/tess-two
+- Upgrade tesstwo by https://github.com/alexcohn/tess-two
