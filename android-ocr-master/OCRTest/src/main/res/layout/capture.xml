@@ -159,7 +159,7 @@
           android:layout_height="wrap_content"
           android:maxWidth="160dip"
           android:maxHeight="160dip"
-          android:paddingLeft="12dip"
+          android:paddingLeft="26dip"
           android:adjustViewBounds="true"
           android:scaleType="centerInside" />
 

@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "edu.sfsu.cs.orange.ocr"
-        minSdkVersion 16
+        minSdkVersion 9
         targetSdkVersion 10
     }
 
@@ -19,10 +19,9 @@ android {
 }
 
 dependencies {
-    //compile 'com.rmtheis:tess-two:6.0.4'
+    compile 'com.rmtheis:tess-two:6.0.4'
     compile files('libs/google-api-translate-java-0.98-mod2.jar')
     compile files('libs/json_simple-1.1.jar')
     compile files('libs/jtar-1.0.4.jar')
     compile files('libs/microsoft-translator-java-api-0.6-mod.jar')
-    implementation 'com.rmtheis:tess-two:9.1.0'
 }

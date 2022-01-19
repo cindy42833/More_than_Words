@@ -187,15 +187,15 @@ public class PreferencesActivity extends PreferenceActivity implements
       // Update the list of available languages for the currently-chosen translation API.
       listPreferenceTargetLanguage.setEntries(R.array.translationtargetlanguagenames_microsoft);
       listPreferenceTargetLanguage.setEntryValues(R.array.translationtargetiso6391_microsoft);
-      
+
       // Get the corresponding code for our language name
       newLanguageCode = TranslatorBing.toLanguage(currentLanguage);
     } else if (translator.equals(translators[1])) { // Google
       // Update the list of available languages for the currently-chosen translation API.
       listPreferenceTargetLanguage.setEntries(R.array.translationtargetlanguagenames_google);
       listPreferenceTargetLanguage.setEntryValues(R.array.translationtargetiso6391_google);
-      
-      // Get the corresponding code for our language name      
+
+      // Get the corresponding code for our language name
       newLanguageCode = TranslatorGoogle.toLanguage(currentLanguage);
     }
 

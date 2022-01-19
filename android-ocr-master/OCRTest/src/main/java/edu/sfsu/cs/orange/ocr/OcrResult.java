@@ -15,14 +15,14 @@
  */
 package edu.sfsu.cs.orange.ocr;
 
-import java.util.List;
-
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Point;
 import android.graphics.Rect;
+
+import java.util.List;
 
 /**
  * Encapsulates the result of OCR.
@@ -42,6 +42,7 @@ public class OcrResult {
 
   private long timestamp;
   private long recognitionTimeRequired;
+
 
   private Paint paint;
   

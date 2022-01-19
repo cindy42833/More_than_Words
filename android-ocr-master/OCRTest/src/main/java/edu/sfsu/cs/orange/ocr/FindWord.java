@@ -18,9 +18,8 @@ import java.io.IOException;
 
 public class FindWord extends Activity {
 
-    private static final String DB_Name = "test.db";
+    private static final String DB_Name = "words.db";
     private static final int DB_Version = 1;
-    private static final String Table_Name = "dictionaries";
     Context context;
 
     public FindWord(Context context) {
@@ -28,21 +27,12 @@ public class FindWord extends Activity {
     }
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        dbHelper = new DBHelper(context, DB_Name, DB_Version);
-//        try {
-//            dbHelper.openDB();
-//        } catch (SQLException sqle) {
-//            try {
-//                dbHelper.copyDB();
-//            } catch (IOException e) {
-//                throw new Error("Error copying database");
-//            }
-//        }
     }
 
     protected String findTranslation(String word) {
-        DBHelper dbHelper = new DBHelper(context, DB_Name, DB_Version);
         if(word != null) {
+            DBHelper dbHelper = new DBHelper(context, DB_Name, DB_Version);
+
             try {
                 dbHelper.openDB();
             } catch (SQLException sqle) {
@@ -52,67 +42,86 @@ public class FindWord extends Activity {
                     throw new Error("Error copying database");
                 }
             }
+
             SQLiteDatabase db;
             db = dbHelper.openDB();
+            String lowerWord = word.toLowerCase();
             Cursor cursor;
             try {
-                cursor = db.rawQuery("SELECT * FROM dictionaries where name=?", new String [] {word});
+                cursor = db.rawQuery("SELECT * FROM words where eng=?", new String [] {lowerWord});
             } catch (SQLException e) {
                 throw new Error("SQL find exception");
             }
 
             if(cursor.moveToFirst()) {
-                return cursor.getString(1);
+                return cursor.getString(2);
             }
         }
         return null;
     }
 
     protected Bitmap findImage(String word) {
+
         DBHelper dbHelper = new DBHelper(context, DB_Name, DB_Version);
+
+        try {
+            dbHelper.openDB();
+        } catch (SQLException sqle) {
+            try {
+                dbHelper.copyDB();
+            } catch (IOException e) {
+                throw new Error("Error copying database");
+            }
+        }
+
         SQLiteDatabase db;
         db = dbHelper.openDB();
-
+        String lowerWord = word.toLowerCase();
         Cursor cursor;
         try {
-            cursor = db.rawQuery("SELECT * FROM dictionaries where name=?", new String [] {word});
+            cursor = db.rawQuery("SELECT * FROM words where eng=?", new String [] {lowerWord});
         } catch (SQLException e) {
             throw new Error("SQL find exception");
         }
+        String imageName = "unknown", imageExtensionName = "";
+        String extStorageDirectory = context.getExternalFilesDir("Images").toString();
 
-        if(cursor.moveToFirst()) {
-            String imageName, translation;
-            String extStorageDirectory = context.getExternalFilesDir("Images").toString();
-            cursor.moveToFirst();
-            translation = cursor.getString(1);
-            imageName = cursor.getString(2);
-            File file = new File(extStorageDirectory + '/' + imageName);
-            Log.i("PATH", extStorageDirectory);
-            if (!file.exists()) {
-                try {
-                    Bitmap bm = BitmapFactory.decodeResource(context.getResources(), context.getResources().getIdentifier(translation, "drawable", context.getPackageName()));
-                    FileOutputStream outStream = new FileOutputStream(file);
-                    bm.compress(Bitmap.CompressFormat.PNG, 100, outStream);
-
-                    try {
-                        outStream.flush();
-                        outStream.close();
-                    } catch (IOException e) {
-                        throw new Error("Error flush IO");
-                    }
-
-                } catch (FileNotFoundException ex) {
-                    throw new Error("FileNotFoundException");
-                }
-            } else {
-                Log.i("Exist", "file exist");
-            }
-
-
-            String path = extStorageDirectory + '/' + imageName;
-//        Bitmap im = BitmapFactory.decodeFile(path);
-            return BitmapFactory.decodeFile(path);
+        if(!cursor.moveToFirst()) {
+            imageExtensionName = "unknown.png";
         }
-        return null;
+        else {
+            imageExtensionName = cursor.getString(3);
+            if(imageExtensionName.equals("0")) {
+                imageExtensionName = "unknown.png";
+            }
+            else {
+                imageName = imageExtensionName.split("\\.")[0];
+            }
+        }
+
+        File file = new File(extStorageDirectory + '/' + imageExtensionName);
+        Log.i("PATH", extStorageDirectory);
+        if (!file.exists()) {
+            try {
+                Bitmap bm = BitmapFactory.decodeResource(context.getResources(), context.getResources().getIdentifier(imageName, "drawable", context.getPackageName()));
+                FileOutputStream outStream = new FileOutputStream(file);
+                bm.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+
+                try {
+                    outStream.flush();
+                    outStream.close();
+                } catch (IOException e) {
+                    throw new Error("Error flush IO");
+                }
+
+            } catch (FileNotFoundException ex) {
+                throw new Error("FileNotFoundException");
+            }
+        } else {
+            Log.i("Exist", "file exist");
+        }
+
+        String path = extStorageDirectory + '/' + imageExtensionName;
+        return BitmapFactory.decodeFile(path);
     }
 }

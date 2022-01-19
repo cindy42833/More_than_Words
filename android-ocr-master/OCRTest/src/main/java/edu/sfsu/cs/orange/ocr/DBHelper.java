@@ -16,7 +16,7 @@ import java.io.OutputStream;
 public class DBHelper extends SQLiteOpenHelper {
     private static final String PACKAGE_NAME = "edu.sfsu.cs.orange.ocr"; //包名
     private static final String DB_PATH =  "/data" + Environment.getDataDirectory().getAbsolutePath() + "/" + PACKAGE_NAME + "/databases/";
-    private static final String DB_NAME = "test";
+    private static final String DB_NAME = "words";
     private static final String COMPLETE_PATH = DB_PATH + DB_NAME;
     private final Context context;
 

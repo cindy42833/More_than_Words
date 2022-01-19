@@ -747,7 +747,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
     // Display the recognized text
     TextView sourceLanguageTextView = (TextView) findViewById(R.id.source_language_text_view);
-    sourceLanguageTextView.setText("test");
     TextView ocrResultTextView = (TextView) findViewById(R.id.ocr_result_text_view);
     ocrResultTextView.setText(ocrResult.getText());
     Log.i("Text", ocrResult.getText());
@@ -761,16 +760,15 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     TextView translationTextView = (TextView) findViewById(R.id.translation_text_view);
     ImageView translation_image = (ImageView) findViewById(R.id.translation_image);
     FindWord findWordHelper = new FindWord(this);
-    //translationLanguageLabelTextView.setVisibility(View.VISIBLE);
     translationLanguageLabelTextView.setText("Chinese");
-    translationLanguageTextView.setText("2");
+    translationLanguageTextView.setText("");
     String translation = findWordHelper.findTranslation(ocrResult.getText());
     Bitmap image = findWordHelper.findImage(ocrResult.getText());
 
     if(translation == null)
-        translation = "There is no relative word";
+        translation = "努力增加單字中..";
     if(image != null) {
-      progressView.setVisibility(View.VISIBLE);
+      translation_image.setVisibility(View.VISIBLE);
       translation_image.setImageBitmap(image);
     }
     else
@@ -780,28 +778,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     progressView.setVisibility(View.GONE);
     setProgressBarVisibility(false);
 
-//    if (isTranslationActive) {
-//      // Handle translation text fields
-//      translationLanguageLabelTextView.setVisibility(View.VISIBLE);
-//      translationLanguageTextView.setText(targetLanguageReadable);
-//      translationLanguageTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL), Typeface.NORMAL);
-//      translationLanguageTextView.setVisibility(View.VISIBLE);
-//
-//      // Activate/re-activate the indeterminate progress indicator
-//      translationTextView.setVisibility(View.GONE);
-//      progressView.setVisibility(View.VISIBLE);
-//      setProgressBarVisibility(true);
-//
-//      // Get the translation asynchronously
-//      new TranslateAsyncTask(this, sourceLanguageCodeTranslation, targetLanguageCodeTranslation,
-//          ocrResult.getText()).execute();
-//    } else {
-//      translationLanguageLabelTextView.setVisibility(View.GONE);
-//      translationLanguageTextView.setVisibility(View.GONE);
-//      translationTextView.setVisibility(View.GONE);
-//      progressView.setVisibility(View.GONE);
-//      setProgressBarVisibility(false);
-//    }
     return true;
   }
   
