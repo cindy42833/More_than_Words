@@ -19,3 +19,6 @@ https://github.com/cindy42833/More_than_Words.git
 
 ## Finish
 ![](https://i.imgur.com/S0L7rYy.png)
+
+## Reference
+- https://github.com/rmtheis/android-ocr
